@@ -1,5 +1,4 @@
-ARG IMAGE=alpine
-FROM ${IMAGE}
+FROM alpine
 # install build dependencies
 RUN apk update
 RUN apk add musl-dev gcc autoconf automake libtool git make pkgconf bash
