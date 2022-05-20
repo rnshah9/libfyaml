@@ -1,0 +1,5 @@
+project: rnshah9/libfyaml
+target: libfyaml
+
+cmds:
+  - cmd: /build/src/.libs/fy-tool --parse-dump @@
