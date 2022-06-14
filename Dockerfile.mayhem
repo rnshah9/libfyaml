@@ -1,7 +1,6 @@
-FROM --platform=linux/amd64 ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:20.04 as builder
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y vim less man
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential musl-dev  autoconf automake libtool git pkgconf bash
 # configure argument
 ARG CONFIG_ARGS
@@ -15,3 +14,11 @@ RUN ./configure 2>&1 ${CONFIG_ARGS}
 RUN make
 RUN make install
 # NOTE: no check, since alpine it's only a build test distro
+RUN mkdir -p /deps
+RUN ldd /build/src/.libs/fy-tool | tr -s '[:blank:]' '\n' | grep '^/' | xargs -I % sh -c 'cp % /deps;'
+
+FROM ubuntu:20.04 as package
+
+COPY --from=builder /deps /deps
+COPY --from=builder /build/src/.libs/fy-tool /build/src/.libs/fy-tool
+ENV LD_LIBRARY_PATH=/deps

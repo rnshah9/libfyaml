@@ -1,4 +1,4 @@
-project: rnshah9/libfyaml
+project: libfyaml
 target: fy-tool
 
 cmds:
