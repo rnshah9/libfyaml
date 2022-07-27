@@ -2,4 +2,4 @@ project: libfyaml
 target: fy-tool
 
 cmds:
-  - cmd: /build/src/.libs/fy-tool --parse-dump @@
+  - cmd: /install/bin/fy-tool --parse-dump @@
